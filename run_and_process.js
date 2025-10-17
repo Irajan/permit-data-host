@@ -33,6 +33,7 @@ async function main() {
       // Skip if already processed
       if (fs.existsSync(donePath)) {
         console.log(`Skipping ${file}, already processed.`);
+        fs.unlinkSync(filePath); // Remove duplicate file
         continue;
       }
 
@@ -51,6 +52,7 @@ async function main() {
         // Do not move the file if there's an error
       }
     }
+    fs.appendFileSync(logFile, `\n`);
 
     await client.end();
     console.log('All batch files processed.');
